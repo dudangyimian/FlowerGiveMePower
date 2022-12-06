@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="meta description">
+    <title>About Us</title>
+
+    <!--=== Favicon ===-->
+    <link rel="shortcut icon" href="{{ url_for('static',filename='images/img/favicon.ico') }}" type="image/x-icon"/>
+
+    <!-- Google fonts include -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,900%7CYesteryear"
+          rel="stylesheet">
+
+    <!-- All Vendor & plugins CSS include -->
+    <link href="{{ url_for('static',filename='css/vendor.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static',filename='css/about_us.css') }}" rel="stylesheet">
+    <!-- Main Style CSS -->
+    <link href="{{ url_for('static',filename='css/style.css') }}" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+    <script src="/oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="/oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script>
+            $(document).on('click', '.locale', function () {
+                var val = $(this).attr('data-value');
+                $.ajax({
+                    url: val,
+                    type: 'GET',
+                    success: function (ret) {
+                        console.log(ret);
+                        location.reload();
+                    }
+                })
+            });
+    </script>
+</head>
+
+<body>
+
+<!-- Start Header Area -->
+<header class="header-area">
+    <!-- main header start -->
+    <div class="main-header d-none d-lg-block">
+        <!-- header top start -->
+        <div class="header-top bdr-bottom">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <div class="welcome-message">
+                            <p>{{ _('Welcome to Blizzard Online Flower Store') }}</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 text-right">
+                        <div class="header-top-settings">
+                            <ul class="nav align-items-center justify-content-end">
+                                <li class="language">
+                                    <span>{{ _('Language:') }}</span>
+                                    <img src="{{ url_for('static',filename='images/img/icon/en.png') }}" alt="flag">
+                                    {{ _('English') }}
+                                    <i class="fa fa-angle-down"></i>
+                                    <ul class="dropdown-list">
+                                        <li>
+                                            <a class="locale " id="zh" data-value="{{ url_for('set_locale', locale='en') }}">
+                                                <img src="{{ url_for('static',filename='images/img/icon/en.png') }}" alt="flag">
+                                                {{ _('English') }}
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="locale " id="en" data-value="{{ url_for('set_locale', locale='zh') }}">
+                                                <img src="{{ url_for('static',filename='images/img/icon/ch.png') }}" alt="flag">
+                                                {{ _('Chinese') }}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="curreny-wrap">
+                                    <span>{{ _('Currency:') }}</span>
+                                    ¥ CNY
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- header top end -->
+
+        <!-- header middle area start -->
+        <div class="header-main-area sticky">
+            <div class="container">
+                <div class="row align-items-center position-relative">
+
+                    <!-- start logo area -->
+                    <div class="col-lg-3">
+                        <div class="logo">
+                            <a href="{{ url_for('index') }}">
+                                <img src="{{ url_for('static',filename='images/img/icon/logo.png') }}" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <!-- start logo area -->
+
+                    <!-- main menu area start -->
+                    <div class="col-lg-6 position-static">
+                        <div class="main-menu-area">
+                            <div class="main-menu">
+                                <!-- main menu navbar start -->
+                                <nav class="desktop-menu">
+                                    <ul>
+                                        <li><a href="{{ url_for('index') }}">{{ _('Home') }}</a></li>
+                                        <li><a href="{{ url_for('shop') }}">{{ _('Shop') }}</a></li>
+                                        <li><a href="{{ url_for('onlinechat') }}">{{ _('Contact_Us') }}</a></li>
+                                        <li><a href="{{ url_for('about_us') }}">{{ _('About_Us') }}</a></li>
+                                    </ul>
+                                </nav>
+                                <!-- main menu navbar end -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- main menu area end -->
+
+                    <!-- mini cart area start -->
+                    <div class="col-lg-3">
+                        <div class="header-configure-wrapper">
+                            <div class="header-configure-area">
+                                <ul class="nav justify-content-end">
+                                    <li>
+                                        <a href="#" class="offcanvas-btn">
+                                            <i class="lnr lnr-magnifier"></i>
+                                        </a>
+                                    </li>
+                                    <li class="user-hover">
+                                        <a href="#">
+                                            <i class="lnr lnr-user"></i>
+                                        </a>
+                                        <ul class="dropdown-list">
+                                            <li><a href="{{ url_for('login') }}">{{ _('login') }}</a></li>
+                                            <li><a href="{{ url_for('signup') }}">{{ _('register') }}</a></li>
+                                            <li><a href="{{ url_for('profile') }}">{{ _('my account') }}</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="minicart-btn1">
+                                            <i class="lnr lnr-heart"></i>
+                                            <div class="notification" id="length1">{{ lengthlike }}</div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="minicart-btn">
+                                            <i class="lnr lnr-cart"></i>
+                                            <div class="notification" id="length">{{ length }}</div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- mini cart area end -->
+
+                </div>
+            </div>
+        </div>
+        <!-- header middle area end -->
+    </div>
+    <!-- main header start -->
+
+    <!-- mobile header start -->
+    <div class="mobile-header d-lg-none d-md-block sticky">
+        <!--mobile header top start -->
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12">
+                    <div class="mobile-main-header">
+                        <div class="mobile-logo">
+                            <a href="{{ url_for('index') }}">
+                                <img src="{{ url_for('static',filename='images/img/icon/logo.png') }}" alt="Brand Logo">
+                            </a>
+                        </div>
+                        <div class="mobile-menu-toggler">
+                            <div class="mini-cart-wrap1">
+                                <a href="#">
+                                    <i class="lnr lnr-heart"></i>
+                                </a>
+                            </div>
+                            <div class="mini-cart-wrap">
+                                <a href="#">
+                                    <i class="lnr lnr-cart"></i>
+                                </a>
+                            </div>
+                            <div class="mobile-menu-btn">
+                                <div class="off-canvas-btn">
+                                    <i class="lnr lnr-menu"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- mobile header top start -->
+    </div>
+    <!-- mobile header end -->
+</header>
+<!-- end Header Area -->
+
+<!-- off-canvas menu start -->
+<aside class="off-canvas-wrapper">
+    <div class="off-canvas-overlay"></div>
+    <div class="off-canvas-inner-content">
+        <div class="btn-close-off-canvas">
+            <i class="lnr lnr-cross"></i>
+        </div>
+
+        <div class="off-canvas-inner">
+            <!-- search box start -->
+            <div class="search-box-offcanvas">
+                <form>
+                    <input type="text" placeholder="Search Here...">
+                    <button class="search-btn"><i class="lnr lnr-magnifier"></i></button>
+                </form>
+            </div>
+            <!-- search box end -->
+
+            <!-- mobile menu start -->
+            <div class="mobile-navigation">
+
+                <!-- mobile menu navigation start -->
+                <nav>
+                    <ul class="mobile-menu">
+                        <li><a href="{{ url_for('index') }}">{{ _('Home') }}</a></li>
+                        <li><a href="{{ url_for('shop') }}">{{ _('Shop') }}</a></li>
+                        <li><a href="{{ url_for('onlinechat') }}">{{ _('Contact_Us') }}</a></li>
+                        <li><a href="{{ url_for('about_us') }}">{{ _('About_Us') }}</a></li>
+                    </ul>
+                </nav>
+                <!-- mobile menu navigation end -->
+            </div>
+            <!-- mobile menu end -->
+
+            <div class="mobile-settings">
+                <ul class="nav">
+                    <li>
+                        <div class="dropdown mobile-top-dropdown">
+                            <a href="#" class="dropdown-toggle" id="currency" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                {{ _('Currency') }}
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="currency">
+                                <a class="dropdown-item" href="#">$ USD</a>
+                                <a class="dropdown-item" href="#">$ EURO</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown mobile-top-dropdown">
+                            <a href="#" class="dropdown-toggle" id="myaccount" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                {{ _('My Account') }}
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="myaccount">
+                                 <a class="dropdown-item" href="{{ url_for('profile') }}">{{ _('my account') }}</a>
+                                <a class="dropdown-item" href="{{ url_for('login') }}">{{ _('login') }}</a>
+                                <a class="dropdown-item" href="{{ url_for('signup') }}">{{ _('register') }}</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- offcanvas widget area start -->
+            <div class="offcanvas-widget-area">
+                <div class="off-canvas-contact-widget">
+                    <ul>
+                        <li><i class="fa fa-mobile"></i>
+                            <a href="#">0123456789</a>
+                        </li>
+                        <li><i class="fa fa-envelope-o"></i>
+                            <a href="#">info@yourdomain.com</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="off-canvas-social-widget">
+                    <a href="#"><i class="fa fa-facebook"></i></a>
+                    <a href="#"><i class="fa fa-twitter"></i></a>
+                    <a href="#"><i class="fa fa-pinterest-p"></i></a>
+                    <a href="#"><i class="fa fa-linkedin"></i></a>
+                    <a href="#"><i class="fa fa-youtube-play"></i></a>
+                </div>
+            </div>
+            <!-- offcanvas widget area end -->
+        </div>
+    </div>
+</aside>
+<!-- off-canvas menu end -->
+
+<!-- offcanvas mini like start -->
+<div class="offcanvas-minicart-wrapper">
+    <div class="minicart-inner" id="like">
+        <div class="offcanvas-overlay"></div>
+        <div class="minicart-inner-content">
+            <div class="minicart-close">
+                <i class="lnr lnr-cross"></i>
+            </div>
+            <div class="minicart-content-box">
+                <div class="minicart-item-wrapper">
+                    {% for basket in basketslike %}
+                    {% for item in posts %}
+                    {% if item.id==basket.flower_id %}
+                    <ul id="{{'fuck1'+basket.id|string}}">
+                        <li class="minicart-item">
+                            <div class="minicart-thumb">
+                                    <a href="#">
+                                    <img src="static/images/{{ item.img }}"
+                                         alt="product">
+                                </a>
+                            </div>
+                            <div class="minicart-content">
+                                <h3 class="product-name">
+                                    <a href="#">{{item.name}}</a>
+                                </h3>
+                            </div>
+                            <a class="minicart-remove" onclick="RemoveBasketlike({{ basket.id }})" href="#"><i
+                                    class="lnr lnr-cross"></i></a>
+                        </li>
+                    </ul>
+                    {% endif %}
+                    {% endfor %}
+                    {% endfor %}
+                </div>
+
+                <div class="minicart-pricing-box">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- offcanvas mini like end -->
+
+<!-- offcanvas mini cart start -->
+<div class="offcanvas-minicart-wrapper">
+    <div class="minicart-inner">
+        <div class="offcanvas-overlay"></div>
+        <div class="minicart-inner-content">
+            <div class="minicart-close">
+                <i class="lnr lnr-cross"></i>
+            </div>
+            <div class="minicart-content-box">
+                <div class="minicart-item-wrapper">
+                    {% for basket in baskets %}
+                    {% for item in posts %}
+                    {% if item.id==basket.flower_id %}
+                    <ul id="{{'fuck'+basket.id|string}}">
+                        <li class="minicart-item">
+                            <div class="minicart-thumb">
+                                <a href="#">
+                                    <img src="static/images/{{ item.img }}"
+                                         alt="product">
+                                </a>
+                            </div>
+                            <div class="minicart-content">
+                                <h3 class="product-name">
+                                    <a href="#">{{item.name}}</a>
+                                </h3>
+                                <p>
+                                    <span class="cart-quantity">{{ basket.quantity }}<strong>&times;</strong></span>
+                                    <span class="cart-price">{{ basket.total }}</span>
+                                </p>
+                            </div>
+                            <a class="minicart-remove" onclick="RemoveBasket({{ basket.id }})" href="#"><i
+                                    class="lnr lnr-cross"></i></a>
+                        </li>
+                    </ul>
+                    {% endif %}
+                    {% endfor %}
+                    {% endfor %}
+                </div>
+
+                <div class="minicart-pricing-box">
+                    <ul>
+                        <li class="total">
+                            <span>{{ _('Total') }}</span>
+                            <span id="total"><strong>${{ total }}</strong></span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="minicart-button">
+                    <a href="#"><i class="fa fa-shopping-cart"></i> {{ _('view cart') }}</a>
+                    <a href="{{ url_for('checkout') }}"><i class="fa fa-share"></i>{{ _('checkout') }} </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- offcanvas mini cart end -->
+
+<!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+
+<div id="mainDiv1">
+    <div>
+        <h1>{{ _('COVID-19 Hurts Us ') }}<br>&nbsp;&nbsp;&nbsp;&nbsp;{{ _("But It Can't Destroy Us!") }}</h1>
+        <h5>{{ _('Our offline flower shop get stroke badly due to COVID-19 ') }}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{{ _('But we never give up and come back online with the help of group 15 Blizzard!') }}</h5>
+        <a>{{ _('Get Started') }}<img src="{{ url_for("static",filename="images/arrowWhite.png") }}" alt=""></a>
+    </div>
+
+    <img src="{{ url_for("static",filename="images/profile.jpg") }}" alt="">
+</div>
+
+
+<div id="mainDiv2">
+    <h1>{{ _("Let's see who's on the team") }}</h1>
+    <h4>{{ _('As a well-cooperated team, each one of us could fully utilize own strengths and complement each other!') }}</h4>
+    <div>
+        <div>
+            <img src="{{ url_for("static",filename="images/img/avater/avater1.jfif") }}" alt="">
+            <p>
+                <h3>{{ _('Yiqun Hao') }}</h3>
+                <h5>{{ _('BJUT: ') }}18372320</h5>
+                <p class="division">{{ _('Front end engineer for customer portal') }}</p>
+            </p>
+        </div>
+        <div>
+            <img src="{{ url_for("static",filename="images/img/avater/avater2.jfif") }}" alt="">
+            <p>
+                <h3>{{ _('Lingxiao Wang') }}</h3>
+                <h5>{{ _('BJUT: ') }}18372225</h5>
+                <p class="division">{{ _('Back end engineer for customer portal') }}</p>
+            </p>
+        </div>
+        <div>
+            <img src="{{ url_for("static",filename="images/img/avater/avater3.jfif") }}" alt="">
+            <p>
+                <h3>{{ _('Tianxiang Yang') }}</h3>
+                <h5>{{ _('BJUT: ') }}17372321</h5>
+                <p class="division">{{ _('Project Documentation') }}</p>
+            </p>
+        </div>
+    </div>
+    <div>
+        <div>
+            <img src="{{ url_for("static",filename="images/img/avater/avater4.jfif") }}" alt="">
+            <p>
+                <h3>{{ _('Geng Yan') }}</h3>
+                <h5>{{ _('BJUT: ') }}1818206122</h5>
+                <p class="division">{{ _('Front end engineer for staff portal') }}</p>
+            </p>
+        </div>
+        <div>
+            <img src="{{ url_for("static",filename="images/img/avater/avater5.jfif") }}" alt="">
+            <p>
+                <h3>{{ _('Chuyuan Xu') }}</h3>
+                <h5>{{ _('BJUT: ') }}18372115</h5>
+                <p class="division">{{ _('Back end engineer for staff portal') }}</p>
+            </p>
+        </div>
+        <div>
+            <img src="{{ url_for("static",filename="images/img/avater/avater6.jfif") }}" alt="">
+            <p>
+                <h3>{{ _('Tianyi Yun') }}</h3>
+                <h5>{{ _('BJUT: ') }}17372230</h5>
+                <p class="division">{{ _('Integration and Testing') }}</p>
+            </p>
+        </div>
+    </div>
+
+
+</div>
+
+<div id="mainDiv3">
+    <h1>{{ _('How Do We Make It?') }}</h1>
+    <div>
+        <img src="{{ url_for("static",filename="images/gant.webp") }}" alt="">
+        <p>
+            <h2>{{ _('Communication and Trust') }}</h2>
+            <p>
+               <i>{{ _('Our collaboration has not always been smooth sailing. ') }}<br>
+                {{ _("Early in the project, we found that if we didn't give everyone a clear task and deadline,") }}
+                {{ _('our teammates would be lazy until reaching the deadline.') }}
+                {{ _("So we began to set strict weekly tasks and believed that the quality of each other's achievement is satisfying.") }}
+                {{ _('In this way, our division of labor becomes very intuitive and easy, we can complete a lot of tasks in a short period,') }}
+                {{ _('while everyone is very chilled but not tired.') }}</i>
+            </p>
+        </p>
+    </div>
+</div>
+
+
+<div id="mainDiv4">
+    <h1>{{ _('Ready to enter the sea of flowers? Just do it!') }}</h1>
+    <h3>{{ _('Find any kinds you can imagine! Anytime! Anywhere!') }}</h3>
+    <a href="{{url_for('index')}}">{{ _('Begin Shopping') }} <img src="{{ url_for("static",filename="images/arrow.png") }}" alt=""></a>
+</div>
+<!--end!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+
+<!-- Start Footer Area Wrapper -->
+<footer class="footer-wrapper">
+
+    <!-- footer widget area start -->
+    <div class="footer-widget-area">
+        <div class="container">
+            <div class="footer-widget-inner section-space">
+                <div class="row mbn-30">
+                    <!-- footer widget item start -->
+                    <div class="col-lg-5 col-md-6 col-sm-8">
+                        <div class="footer-widget-item mb-30">
+                            <div class="footer-widget-title">
+                                <h5>{{ _('Our account') }}</h5>
+                            </div>
+                            <ul class="footer-widget-body accout-widget">
+                                <li class="address">
+                                    <em><i class="lnr lnr-map-marker"></i></em>
+                                    {{ _('Beijing University of Technology') }}
+                                </li>
+                                <li class="email">
+                                    <em><i class="lnr lnr-envelope"></i>{{ _('Mail us') }}: </em>
+                                    <a href="mailto:test@yourdomain.com">2240073347@qq.com</a>
+                                </li>
+                                <li class="phone">
+                                    <em><i class="lnr lnr-phone-handset"></i> {{ _('Phones') }}: </em>
+                                    <a href="tel:(012)800456789-987">0472-2134483</a>
+                                </li>
+                            </ul>
+                            <div class="payment-method">
+                                <img src="{{ url_for('static',filename='images/img/payment-pic.png') }}"
+                                     alt="payment method">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- footer widget item end -->
+
+                    <!-- footer widget item start -->
+                    <div class="col-lg-2 col-md-6 col-sm-4">
+                        <div class="footer-widget-item mb-30">
+                            <div class="footer-widget-title">
+                                <h5>{{ _('More Aout Us') }}</h5>
+                            </div>
+                            <ul class="footer-widget-body">
+                                <li><a href="{{ url_for('onlinechat') }}">{{ _('Contact Us') }}</a></li>
+                                <li><a href="{{ url_for('about_us') }}">{{ _('About Us') }}</a></li>
+                                <li><a href="{{ url_for('shop') }}">{{ _('Shop') }}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- footer widget item end -->
+
+
+                    <!-- footer widget item start -->
+                    <div class="col-lg-2 offset-lg-1 col-md-6 col-sm-6">
+                        <div class="footer-widget-item mb-30">
+                            <div class="footer-widget-title">
+                                <h5>{{ _('Quick Links') }}</h5>
+                            </div>
+                            <ul class="footer-widget-body">
+                                <li><a href="{{ url_for('index') }}">{{ _('Home') }}</a></li>
+                                <li><a href="{{ url_for('login') }}">{{ _('Login') }}</a></li>
+                                <li><a href="{{ url_for('signup') }}">{{ _('Register') }}</a></li>
+                                <li><a href="{{ url_for('profile') }}">{{ _('Account') }}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- footer widget item end -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- footer widget area end -->
+
+     <!-- footer bottom area start -->
+    <div class="footer-bottom-area">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 order-2 order-md-1">
+                    <div class="copyright-text">
+                        <p>Copyright &copy; 2021.{{ _('Group 15 Blizzard All rights reserved.') }}</p>
+                    </div>
+                </div>
+                <div class="col-md-6 order-1 order-md-2">
+                    <div class="footer-social-link">
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-linkedin"></i></a>
+                        <a href="#"><i class="fa fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- footer bottom area end -->
+</footer>
+<!-- End Footer Area Wrapper -->
+
+
+
+
+
+<!-- Scroll to top start -->
+<div class="scroll-top not-visible">
+    <i class="fa fa-angle-up"></i>
+</div>
+<!-- Scroll to Top End -->
+
+<!-- All vendor & plugins & active js include here -->
+<!--All Vendor Js -->
+<script src="{{ url_for('static',filename='scripts/vendor.js') }}"></script>
+<!-- Active Js -->
+<script src="{{ url_for('static',filename='scripts/active.js') }}"></script>
+<script src="{{ url_for('static',filename='scripts/index.js') }}"></script>
+<script src="{{ url_for('static',filename='scripts/index1.js') }}"></script>
+<script src="{{ url_for('static',filename='scripts/index2.js') }}"></script>
+<script src="{{ url_for('static',filename='scripts/jquery.js') }}"></script>
+<script src="{{ url_for('static',filename='scripts/indexadd.js') }}"></script>
+<script src="{{ url_for('static',filename='scripts/indexlike.js') }}"></script>
+<script src="{{ url_for('static',filename='scripts/indexremovelike.js') }}"></script>
+<style>
+    .copyrights {
+        text-indent: -9999px;
+        height: 0;
+        line-height: 0;
+        font-size: 0;
+        overflow: hidden;
+    }
+</style>
+<div class="copyrights" id="links20210126">
+    Collect from <a href="http://www.cssmoban.com/" title="网站模板">模板之家</a>
+    <a href="https://www.chazidian.com/" title="查字典">查字典</a>
+</div>
+</body>
+
+</html>
