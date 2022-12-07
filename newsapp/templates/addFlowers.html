@@ -71,11 +71,11 @@
         <div class="row-fluid">
             <div class="span12">
                 <div class="widget-box">
-                    <div class="widget-title">
+                    <div class="widget-title backgroundB">
 								<span class="icon">
 									<i class="icon-info-sign"></i>
 								</span>
-                        <h5>{{ _('Detailed information') }}</h5>
+                        <h5>{{ _('Image Recoginition') }}</h5>
                     </div>
 
 <!--                              modify hereeeeeeeee<mo></mo>-->
@@ -88,54 +88,107 @@
                         <form action="" method="post" enctype="multipart/form-data" class="form-horizontal formA" id="just_validate" novalidate>
                         {{ form.hidden_tag() }}
                         <div class="control-group">
-                            <label class="control-label">{{ _('Flowers name') }}</label>
+                            <label class="control-label">{{ _('Module Chosen') }}</label>
                             <div class="controls">
-                                {{ form.name(id='req', placeholder="entered the flowers name here") }}
+                                {{ form.name(id='req', placeholder="you can choose 1 or 2 or 3") }}
                             </div>
                         </div>
 
 
-                        <div class="control-group">
-                            <label class="control-label">{{ _('Shop address') }}</label>
-                            <div class="controls">
-                                {{ form.address(placeholder="show your shop's location") }}
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">{{ _('Flower detail') }}</label>
-                            <div class="controls">
-                                {{ form.detail(placeholder="Maybe it is a bunch of flower") }}
-                                <span class="help-block">{{ _('such as the color flavour or ingredient') }}</span>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
+                            <div class="control-group">
                             <label class="control-label">{{ _('Upload photo') }}</label>
                             <div class="controls">
                                 {{ form.image() }}
-                                {{ form.image() }}
+
+                                <span class="help-block">{{ _('You don\'t need to fill the field below') }}</span>
+
+{#                                {{ form.image() }}#}
+                            </div>
+                        </div>
+
+
+
+{#                        <div class="control-group">#}
+{#                            <label class="control-label">{{ _('Flower detail') }}</label>#}
+{#                            <div class="controls">#}
+{#                                {{ form.detail(placeholder="Maybe it is a bunch of flower") }}#}
+{##}
+{#                                <input type="text" placeholder="{{  res  }}" />#}
+{#                            </div>#}
+{#                        </div>#}
+
+
+                            <div class="control-group">
+                            <label class="control-label">{{ _('RTT') }}</label>
+                            <div class="controls">
+                                <input type="text" placeholder="{{ rtthold }}"
+                                       {% if rtt!='' %}
+
+                                       value="{{ rtt }}"
+
+                                       {% endif %}
+
+                                />
+{#                                {{ form.address(placeholder="RTT is going to display here") }}#}
+                            </div>
+                        </div>
+
+
+
+                        <div class="control-group">
+                            <label class="control-label">{{ _('File size') }}</label>
+                            <div class="controls">
+                                <input type="text" placeholder="{{ sizehold }}"
+
+                                        {% if size %}
+
+                                       value="{{ size }}"
+
+                                       {%  else %}
+
+                                       {% endif %}
+
+
+                                />
+{#                                {{ form.price(placeholder="File size is going to display here") }}#}
                             </div>
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label">{{ _('Flower Price') }}</label>
+                            <label class="control-label">{{ _('Recognize result') }}</label>
                             <div class="controls">
-                                {{ form.price(placeholder="enter the price here") }}
-                            </div>
-                        </div>
+{#                                {{ form.number(placeholder="Recognize result is going to display here") }}#}
+                                <input type="text" placeholder="{{ reshold }}"
 
-                        <div class="control-group">
-                            <label class="control-label">{{ _('Inventory number') }}</label>
-                            <div class="controls">
-                                {{ form.number(placeholder="the number of available flowers in the warehouse") }}
+                                        {% if res %}
+
+                                       value="{{ res }}"
+
+                                       {% endif %}/>
                                 <span class="help-block">0~999</span>
                             </div>
                         </div>
 
+                        <div class="control-group">
+                            <label class="control-label">Accuracy</label>
+                            <div class="controls">
+{#                                {{ form.number(placeholder="Recognize result is going to display here") }}#}
+                                <input type="text" placeholder="Accuracy gonna display here"
+
+                                        {% if acc %}
+
+                                       value="{{ acc }}"
+
+                                       {% endif %}/>
+                                <span class="help-block"> </span>
+                            </div>
+                        </div>
+
+
 
 
                         <div class="form-actions">
-                            {{ form.submit(class="btn btn-primary",value="Confirm") }}
+                            {{ form.submit(class="btn btn-success btn-round",value="Recognize") }}
                         </div>
                         </form>
                     </div>
@@ -145,7 +198,7 @@
 
         <div class="row-fluid">
             <div id="footer" class="span12">
-                2021 &copy; Group15 BliZZard</div>
+                2022 &copy; Group 16 Unreal</div>
         </div>
     </div>
 </div>

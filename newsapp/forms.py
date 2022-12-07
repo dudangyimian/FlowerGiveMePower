@@ -54,13 +54,15 @@ class SignupForm(FlaskForm):
 # 花的信息表
 class FlowerForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
-    detail = TextAreaField('Introduction', validators=[DataRequired()])  # 简介
-    price = FloatField('Price', validators=[DataRequired()])  # 单价
-    number = IntegerField('Inventory', validators=[DataRequired()])  # 库存
-    image = MultipleFileField('The preview of the flower',
-                              validators=[FileAllowed(['jpg', 'png', 'gif', 'jpeg', 'jfif'])])  # 预览图
-    address = StringField('Shop address', validators=[DataRequired()])  # 店铺地址
-    submit = SubmitField('Comfirm')
+    # detail = TextAreaField('Introduction', validators=[DataRequired()])  # 简介
+    # price = FloatField('Price', validators=[DataRequired()])  # 单价
+    # number = IntegerField('Inventory', validators=[DataRequired()])  # 库存
+    image = FileField('The preview of the flower',
+                              validators=[FileAllowed(['jpg', 'png', 'gif', 'jpeg', 'jfif']),DataRequired()])  # 预览图
+
+    # oneimage = Fi
+    # address = StringField('Shop address', validators=[DataRequired()])  # 店铺地址
+    submit = SubmitField('Recognize')
 
 
 class SearchForm(FlaskForm):

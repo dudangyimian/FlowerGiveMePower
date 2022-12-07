@@ -2,6 +2,15 @@ import os
 import string
 import pandas as pd
 
+
+
+import socket
+import os
+import sys
+import struct
+import time
+
+
 from flask import render_template, flash, redirect, url_for, session, request, jsonify, make_response
 from sqlalchemy import and_,or_
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -931,30 +940,124 @@ def logout():
 def addflower():
     print('z')
     form = FlowerForm()
+    diction = {}
+
+    start_time = time.time()
+
+    diction['reshold'] = "The result will display here"
+    diction['rtthold'] = "The rtt will display here"
+    diction['sizehold'] = "The size uploaded will display here"
     if form.validate_on_submit():
         name = form.name.data
         img_dir = config.Config.PC_UPLOAD_DIR
-        print(img_dir)
+        print("IMG_dir: "+img_dir)
         imgs_obj = form.image.data
         i = 0
+        print("Name?: "+name)
         img1 = ""
-        for img_obj in imgs_obj:
-            if i == 0:
-                img_filename = session.get("USERNAME") + name + str(i) + '_img.jpg'
-                img_obj.save(os.path.join(img_dir, img_filename))
-            else:
-                img1 = session.get("USERNAME") + name + str(i) + '_img.jpg'
-                img_obj.save(os.path.join(img_dir, img1))
-            i = i + 1
-        flower = Flower(name=form.name.data, intro=form.detail.data, price=form.price.data, number=form.number.data,
-                        img=img_filename, img1=img1, address=form.address.data)
+        # for img_obj in imgs_obj:
+        #     if i == 0:
+        #         # img_filename = session.get("USERNAME") + name + str(i) + '_img.jpg'
+        #
+        #         img_filename = "hong.jpg"
+        #         img_obj.save(os.path.join(img_dir, img_filename))
+        #         print("path: " + os.path.join(img_dir, img_filename))
+        #     else:
+        #         img1 = session.get("USERNAME") + name + str(i) + '_img.jpg'
+        #         img_obj.save(os.path.join(img_dir, img1))
+        #     i = i + 1
+        print("form type: ")
+        print(type(form.image.data))
+        # print("upload name: "+form.image)
+        print(form.image)
+        form.image.name
+        img_filename = "hong.jpg"
+        file_saved = os.path.join(img_dir, img_filename)
+        imgs_obj.save(file_saved)
+
+
         print("caocaocao3")
-        db.session.add(flower)
-        db.session.commit()
         flash("'Add flower successfully!")
-        return redirect(url_for('index'))
+
+        #socket client below   ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect(('127.0.0.1', 8192))
+        except socket.error as msg:
+            print(msg)
+            sys.exit(1)
+
+        while True:
+            # filepath = input("please input file path: ")
+            print("Connected -z")
+            filepath = "object.jpeg";
+            print("is file: ")
+            print(str(os.path.isfile(file_saved)))
+            if os.path.isfile(file_saved):
+
+                # 定义定义文件信息。128s表示文件名为128bytes长，l表示一个int或log文件类型，在此为文件大小
+                fileinfo_size = struct.calcsize('128sl')
+                # 定义文件头信息，包含文件名和文件大小
+                fhead = struct.pack('128sl', bytes(os.path.basename(file_saved).encode('utf-8')),
+                                    os.stat(file_saved).st_size)
+                # struct.pack('s',)
+                print(type(fhead))
+                size = os.stat(file_saved).st_size /1024
+
+                # head = str(size).split('.')
+                size = int(size)
+                size = str(size)+'KB'
+                diction['size'] = size
+                s.send(fhead)
+                print('client filepath: {0}'.format(filepath))
+                with open(file_saved, 'rb') as fp:
+                    while True:
+                        data = fp.read(1024)
+                        if not data:
+                            print('{0} file send over...'.format(file_saved))
+                            break
+                        s.send(data)
+
+                print("finished")
+            result = s.recv(1024).decode()
+            print("result: "+result)
+
+            rel = result.split('\\')
+
+            print(rel)
+            # print(accuracy)
+
+
+            end = time.time()
+
+            end -= start_time
+
+            diction['rtt'] = end
+
+
+
+            diction['res'] = rel[0]
+            diction['acc'] = rel[1]
+
+
+
+
+            s.close()
+            break
+
+
+
+
+
+
+
+
+
+        return render_template('addFlowers.html', title='add flowers', form=form,**diction)
+        # return redirect(url_for('index'))
     else:
-        return render_template('addFlowers.html', title='add flowers', form=form)
+        return render_template('addFlowers.html', title='add flowers', form=form,**diction)
 
 
 

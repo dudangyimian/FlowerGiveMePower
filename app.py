@@ -5,4 +5,4 @@ if __name__ == '__main__':
     db.create_all()"""
     """db.create_all()"""
     # test.CreateOrder()
-    app.run(debug=True,host = "127.0.0.1",port = 4096)
+    app.run(debug=True,host = "127.0.0.1",port = 5000)
